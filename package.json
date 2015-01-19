@@ -1,0 +1,25 @@
+{
+  "name": "permutation-way",
+  "version": "1.0.0",
+  "description": "permutation using Steinhaus-Johnson-Trotter algorithm",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha test"
+  },
+  "keywords": [
+    "math",
+    "permutation"
+  ],
+  "author": "corentin.jechoux.pro@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.6.0"
+  },
+  "dependencies": {}
+}
