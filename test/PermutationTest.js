@@ -28,8 +28,6 @@ function factorial ( n ) {
 
 
 
-
-
 describe( 'Permutation', function () {
 	it( 'should permut something', function ( done ) {
 		var input = [ 1, 2, 3 ];
@@ -37,19 +35,32 @@ describe( 'Permutation', function () {
 		var actualPermutationCount = 0;
 		
 		var permutationSet = {};
-		
+		// call and assertions
 		new Permutation( input ).on( 'data', function ( data ) {
 			actualPermutationCount++;
-			
-//			console.log( 'permuation: ' + data );
 			permutationSet[ data.toString() ] = true;
-			
+			console.log( data );
 		} ).on( 'end', function () {
-//			console.log( 'end of permutation' );
-			
 			// asserting that we found all the permutation
 			assert.equal( factorial( input.length ), Object.keys( permutationSet ).length  );
-			
+			done();
+		}  );
+		
+	} );
+	
+	it( 'should permut something v2', function ( done ) {
+		var input = [ 1, 2, 3 ];
+		
+		var actualPermutationCount = 0;
+		
+		var permutationSet = {};
+		// call and assertions
+		new Permutation( input ).on( 'data', function ( data ) {
+			actualPermutationCount++;
+			permutationSet[ data.toString() ] = true;
+		} ).on( 'end', function () {
+			// asserting that we found all the permutation
+			assert.equal( factorial( input.length ), Object.keys( permutationSet ).length  );
 			done();
 		}  );
 		
