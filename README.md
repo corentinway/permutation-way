@@ -1,24 +1,25 @@
-[![Build Status](https://travis-ci.org/corentinway/fixp.png?branch=master)](https://travis-ci.org/corentinway/fixp)
+[![Build Status](https://travis-ci.org/corentinway/permutation-way.png?branch=master)](https://travis-ci.org/corentinway/permutation-way)
 
-* About
+# About
 
 This is a module to deliver asynchronously one unique permutation of the input array.
 
 You can get permutations of any objects into an array. If you want to get permutation of complex object you should provide
 a comparator function.
 
-* Example
+# Examples
 
 
-** Simple Example
+## Simple Example
+
+We see how to get permutation of simple javascript types.
 
 ```javascript
-
-var Permutation = require( 'permutation-way' );
+var p = require( 'permutation-way' );
 
 var input = [ 1, 2, 3 ];
 		
-new Permutation( input ).on( 'data', function ( data ) { 
+p.permutationOf( input ).on( 'data', function ( data ) { 
   // display one permutation
   console.log( data );
 } ).on( 'end', function () {
@@ -41,16 +42,18 @@ This will output into the console:
 Even the input array match one permutation and hence is emmitted too.
 
 
-** Permutation of objects
+## Permutation of objects
 
-// TODO 
+
 
 ```javascript
 
-var Permutation = require( 'permutation-way' );
+var p = require( 'permutation-way' );
 
-var input = [ {}, {}, {} ];
-
+var input = [ {code:1}, {code:2}, {code:3} ];
+/**
+ * compare two objects and tells about the order of one object relative to the second object.
+ */
 function comparator ( a, b ) {
   if ( a.code > b.code ) {
     // after
@@ -63,7 +66,7 @@ function comparator ( a, b ) {
     return 0;
   }
 		
-new Permutation( input, comparator ).on( 'data', function ( data ) { 
+p.permutationOf( input, comparator ).on( 'data', function ( data ) { 
   // display one permutation
   console.log( data );
 } ).on( 'end', function () {
