@@ -29,7 +29,7 @@ function factorial ( n ) {
 
 
 describe( 'Permutation', function () {
-	it( 'should permut something', function ( done ) {
+	it( 'should find all permutations', function ( done ) {
 		var input = [ 1, 2, 3 ];
 		
 		var actualPermutationCount = 0;
@@ -39,7 +39,6 @@ describe( 'Permutation', function () {
 		new Permutation( input ).on( 'data', function ( data ) {
 			actualPermutationCount++;
 			permutationSet[ data.toString() ] = true;
-			console.log( data );
 		} ).on( 'end', function () {
 			// asserting that we found all the permutation
 			assert.equal( factorial( input.length ), Object.keys( permutationSet ).length  );
@@ -48,19 +47,37 @@ describe( 'Permutation', function () {
 		
 	} );
 	
-	it( 'should permut something v2', function ( done ) {
-		var input = [ 1, 2, 3 ];
+	it( 'should find all permutation for any input permutation', function ( done ) {
+		var input = [ 3, 2, 1 ];
 		
 		var actualPermutationCount = 0;
+		var expectedPermutationCount = factorial( input.length );
 		
 		var permutationSet = {};
 		// call and assertions
+		
 		new Permutation( input ).on( 'data', function ( data ) {
 			actualPermutationCount++;
 			permutationSet[ data.toString() ] = true;
+			
+			(function () {
+				var actualPermutationCount2 = 0;
+				var permutationSet2 = {};
+				// all permutation found MUST have the same amount of permutation
+				new Permutation( input ).on( 'data', function ( data ) {
+					actualPermutationCount2++;
+					permutationSet2[ data.toString() ] = true;
+				} ).on( 'end', function () {
+					// asserting that we found all the permutation
+					assert.equal( Object.keys( permutationSet2 ).length, expectedPermutationCount );
+					//done();
+				}  );
+			} )();
+			
+			
 		} ).on( 'end', function () {
 			// asserting that we found all the permutation
-			assert.equal( factorial( input.length ), Object.keys( permutationSet ).length  );
+			assert.equal( Object.keys( permutationSet ).length, expectedPermutationCount );
 			done();
 		}  );
 		
@@ -72,6 +89,7 @@ describe( 'Permutation', function () {
 
 
 /*
+
 function describe( text, callback ) {
 	console.log( text );
 	callback();
@@ -83,4 +101,5 @@ function it( text, callback ) {
 	console.log( '  ' + text );
 	callback( done );
 }
+
 */
