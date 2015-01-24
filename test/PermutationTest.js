@@ -43,7 +43,7 @@ describe( 'Permutation', function () {
 			// asserting that we found all the permutation
 			assert.equal( factorial( input.length ), Object.keys( permutationSet ).length  );
 			done();
-		}  );
+		} ).on( 'error', done );
 		
 	} );
 	
@@ -71,7 +71,7 @@ describe( 'Permutation', function () {
 					// asserting that we found all the permutation
 					assert.equal( Object.keys( permutationSet2 ).length, expectedPermutationCount );
 					//done();
-				}  );
+				} ).on( 'error', done );
 			} )();
 			
 			
@@ -79,7 +79,7 @@ describe( 'Permutation', function () {
 			// asserting that we found all the permutation
 			assert.equal( Object.keys( permutationSet ).length, expectedPermutationCount );
 			done();
-		}  );
+		} ).on( 'error', done );
 		
 	} );
 	

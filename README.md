@@ -25,7 +25,10 @@ p.permutationOf( input ).on( 'data', function ( data ) {
 } ).on( 'end', function () {
   // end of permutation
   console.log( 'end' );
-}  );
+} ).on( 'error', function ( err ) {
+  // Error object.
+  // Error types: invalid input or all permutation not found (which should never happen)
+} );
 ```
 
 This will output into the console:
@@ -40,6 +43,12 @@ This will output into the console:
 ```
 
 Even the input array match one permutation and hence is emmitted too.
+
+## Events
+
+* 'data' event is emmitted for each permutation array found
+* 'end' event is emmitted once all permutation were found without error
+* 'end' event is emmitted if an error is met like invalid input or not all permutation found
 
 
 ## Permutation of objects
@@ -72,7 +81,10 @@ p.permutationOf( input, comparator ).on( 'data', function ( data ) {
 } ).on( 'end', function () {
   // end of permutation
   console.log( 'end' );
-}  );
+} ).on( 'error', function ( err ) {
+  // Error object.
+  // Error types: invalid input or all permutation not found (which should never happen)
+} );
 ```
 
 
