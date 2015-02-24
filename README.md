@@ -48,7 +48,7 @@ Even the input array match one permutation and hence is emmitted too.
 
 * 'data' event is emmitted for each permutation array found
 * 'end' event is emmitted once all permutation were found without error
-* 'end' event is emmitted if an error is met like invalid input or not all permutation found
+* 'error' event is emmitted if an error is met like invalid input or not all permutation found
 
 
 ## Permutation of objects
@@ -88,6 +88,6 @@ p.permutationOf( input, comparator ).on( 'data', function ( data ) {
 ```
 
 
-* Much more permutation.
+## Much more permutations.
 
-If you want to play with a high volume of permutation, just create an array of 10 elements.
+If you want to play with a high volume of permutation, you can start with an array of 10 elements.

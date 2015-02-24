@@ -1,6 +1,6 @@
 {
   "name": "permutation-way",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "permutation using Steinhaus-Johnson-Trotter algorithm with Even's speed up. This package deliver asynchronously permutations of the original array",
   "main": "lib/index.js",
   "directories": {
@@ -11,11 +11,18 @@
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha test"
   },
+  "repository": {
+	  "type": "git",
+	  "url": "https://github.com/corentinway/permutation-way"
+  },
+  "bugs":{
+	  "url": "https://github.com/corentinway/permutation-way/issues"
+  },
   "keywords": [
     "math",
     "permutation"
   ],
-  "author": "corentin.jechoux.pro@gmail.com",
+  "author": "corentinway@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "chai": "^1.10.0",
