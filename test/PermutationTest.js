@@ -84,6 +84,52 @@ describe( 'Permutation', function () {
 	} );
 	
 	
+	it( 'should returns only the maximumn permutation ', function ( done ) {
+		var input = [ 3, 2, 1 ];
+		
+		var options = {
+			max: 4
+		};
+		
+		var actualPermutationCount = 0;
+		var expectedPermutationCount = options.max;
+		
+		var permutationSet = {};
+		// call and assertions
+		
+		
+		
+		// use node-debug
+		
+		
+		new Permutation( input, options ).on( 'data', function ( data ) {
+			actualPermutationCount++;
+			permutationSet[ data.toString() ] = true;
+			
+			(function () {
+				var actualPermutationCount2 = 0;
+				var permutationSet2 = {};
+				// all permutation found MUST have the same amount of permutation
+				new Permutation( input, options ).on( 'data', function ( data ) {
+					actualPermutationCount2++;
+					permutationSet2[ data.toString() ] = true;
+				} ).on( 'end', function () {
+					// asserting that we found all the permutation
+					assert.equal( Object.keys( permutationSet2 ).length, expectedPermutationCount );
+					//done();
+				} ).on( 'error', done );
+			} )();
+			
+			
+		} ).on( 'end', function () {
+			// asserting that we found all the permutation
+			assert.equal( Object.keys( permutationSet ).length, expectedPermutationCount );
+			done();
+		} ).on( 'error', done );
+		
+	} );
+	
+	
 	
 } );
 
@@ -101,5 +147,6 @@ function it( text, callback ) {
 	console.log( '  ' + text );
 	callback( done );
 }
+function iit() {}
 
 */
