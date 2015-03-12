@@ -9,6 +9,21 @@ a comparator function.
 
 # Examples
 
+## Declaration
+
+The module <code>permutation-way</code> has one function: <code>permutationOf( inputArray[, comparator][, options] )</code>.
+
+Where parameters are
+* <code>inputArray</code> an array of any type element
+* <code>comparator</code> a function used to compare each element of the <code>inputArray</code>. This is <em>optional</em>
+* <code>options</code> an object to give extra options to the permutation engine.
+  * <code>options.max</code> is a number that give the maximum number of permutation to receive. This is usefull if you want only 
+  4 permutations for an <code>inputArray</code> of 10 elements.
+  
+  
+The <code>inputArray</code> is always returned first. So if you want to receive 4 <em>fresh new</em> 
+permutation at maximum for a big array, you must set the <code>options.max</code> to <code>5</code>.
+  
 
 ## Simple Example
 
@@ -53,6 +68,8 @@ Even the input array match one permutation and hence is emmitted too.
 
 ## Permutation of objects
 
+You need to pass a <em>comparator</em> function to to the second argument of the fuunction 
+<code>permutationOf</code>
 
 
 ```javascript
@@ -91,3 +108,29 @@ p.permutationOf( input, comparator ).on( 'data', function ( data ) {
 ## Much more permutations.
 
 If you want to play with a high volume of permutation, you can start with an array of 10 elements.
+
+
+## Limit the number of permutation to receive
+
+
+```javascript
+
+var p = require( 'permutation-way' );
+
+var input = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+var options = {
+  max: 6
+};
+		
+p.permutationOf( input, options ).on( 'data', function ( data ) { 
+  // display one permutation
+  console.log( data );
+} ).on( 'end', function () {
+  // end of permutation
+  console.log( 'end' );
+} ).on( 'error', function ( err ) {
+  // Error object.
+  // Error types: invalid input or all permutation not found (which should never happen)
+} );
+```
+
