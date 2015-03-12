@@ -112,6 +112,9 @@ If you want to play with a high volume of permutation, you can start with an arr
 
 ## Limit the number of permutation to receive
 
+You have to set the <code>options.max</code> to a positive number. If the value of <code>options.max</code> 
+is not a number of is a negative number, then an 'error' event is emitted. If this value is set to 0, then, no
+'data' event is emitted.
 
 ```javascript
 
