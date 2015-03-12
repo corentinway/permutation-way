@@ -130,6 +130,58 @@ describe( 'Permutation', function () {
 	} );
 	
 	
+	it( 'should returns only the 0 permutation if options.max is set to 0', function ( done ) {
+		var input = [ 3, 2, 1 ];
+		
+		var options = {
+			max: 0
+		};
+		
+		// call and assertions
+		new Permutation( input, options ).on( 'data', function ( data ) {
+			done( new Error( 'it must not return any permutation when options.max === 0' ) )
+		} ).on( 'end', function () {
+			done();
+		} ).on( 'error', done );
+		
+	} );
+	
+	it( 'should emit en error when options.max is not a number', function ( done ) {
+		var input = [ 3, 2, 1 ];
+		
+		var options = {
+			max: "hello"
+		};
+		
+		// call and assertions
+		new Permutation( input, options ).on( 'data', function ( data ) {
+			done( new Error( 'it must not return any permutation when options.max is not a number' ) )
+		} ).on( 'end', function () {
+			done( new Error( 'it must not end when options.max is not a number' ) );
+		} ).on( 'error', function ( err ) {
+			done()
+		} );
+		
+	} );
+	
+	it( 'should emit en error when options.max is a negative number', function ( done ) {
+		var input = [ 3, 2, 1 ];
+		
+		var options = {
+			max: -2
+		};
+		
+		// call and assertions
+		new Permutation( input, options ).on( 'data', function ( data ) {
+			done( new Error( 'it must not return any permutation when options.max is not a positive number' ) )
+		} ).on( 'end', function () {
+			done( new Error( 'it must not end when options.max is not a positive number' ) );
+		} ).on( 'error', function ( err ) {
+			done()
+		} );
+		
+	} );
+	
 	
 } );
 
@@ -140,8 +192,13 @@ function describe( text, callback ) {
 	console.log( text );
 	callback();
 }
-function done() {
-	console.log( 'done' );
+function done( err ) {
+	if ( err ) {
+		console.error( 'FAILURE ');
+		console.error( err );
+	} else {
+		console.log( 'SUCCESS' );
+	}
 }
 function it( text, callback ) {
 	console.log( '  ' + text );
