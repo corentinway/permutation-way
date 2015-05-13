@@ -17,13 +17,13 @@ Where parameters are
 * <code>inputArray</code> an array of any type element
 * <code>comparator</code> a function used to compare each element of the <code>inputArray</code>. This is <em>optional</em>
 * <code>options</code> an object to give extra options to the permutation engine.
-  * <code>options.max</code> is a number that give the maximum number of permutation to receive. This is usefull if you want only 
+  * <code>options.max</code> is a number that give the maximum number of permutation to receive. This is usefull if you want only
   4 permutations for an <code>inputArray</code> of 10 elements.
-  
-  
-The <code>inputArray</code> is always returned first. So if you want to receive 4 <em>fresh new</em> 
+
+
+The <code>inputArray</code> is always returned first. So if you want to receive 4 <em>fresh new</em>
 permutation at maximum for a big array, you must set the <code>options.max</code> to <code>5</code>.
-  
+
 
 ## Simple Example
 
@@ -33,8 +33,8 @@ We see how to get permutation of simple javascript types.
 var p = require( 'permutation-way' );
 
 var input = [ 1, 2, 3 ];
-		
-p.permutationOf( input ).on( 'data', function ( data ) { 
+
+p.permutationOf( input ).on( 'data', function ( data ) {
   // display one permutation
   console.log( data );
 } ).on( 'end', function () {
@@ -68,7 +68,7 @@ Even the input array match one permutation and hence is emmitted too.
 
 ## Permutation of objects
 
-You need to pass a <em>comparator</em> function to to the second argument of the fuunction 
+You need to pass a <em>comparator</em> function to to the second argument of the fuunction
 <code>permutationOf</code>
 
 
@@ -91,8 +91,8 @@ function comparator ( a, b ) {
     // equals
     return 0;
   }
-		
-p.permutationOf( input, comparator ).on( 'data', function ( data ) { 
+
+p.permutationOf( input, comparator ).on( 'data', function ( data ) {
   // display one permutation
   console.log( data );
 } ).on( 'end', function () {
@@ -112,9 +112,12 @@ If you want to play with a high volume of permutation, you can start with an arr
 
 ## Limit the number of permutation to receive
 
-You have to set the <code>options.max</code> to a positive number. If the value of <code>options.max</code> 
+You have to set the <code>options.max</code> to a positive number. If the value of <code>options.max</code>
 is not a number of is a negative number, then an 'error' event is emitted. If this value is set to 0, then, no
 'data' event is emitted.
+
+if you set <code>options.max</code> the permutation found will be compared with the <code>options.max</code> value set.
+An error will be emitted if both value are not the same.
 
 ```javascript
 
@@ -124,8 +127,8 @@ var input = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
 var options = {
   max: 6
 };
-		
-p.permutationOf( input, options ).on( 'data', function ( data ) { 
+
+p.permutationOf( input, options ).on( 'data', function ( data ) {
   // display one permutation
   console.log( data );
 } ).on( 'end', function () {
@@ -137,3 +140,41 @@ p.permutationOf( input, options ).on( 'data', function ( data ) {
 } );
 ```
 
+## Interrupt the permutation count
+
+Let's say you have a big array and you do not want to handle all its permutation.
+You can either set the <code>options.max</code> value or you can interrupt the
+permutation search based on an external condition
+
+
+```javascript
+
+var p = require( 'permutation-way' );
+
+var input = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+var actualCount = 0;
+
+function checkError ( data ) {
+  var hasError = false;
+  // do something and set hasError...
+  return hasError;
+}
+
+var pengine = p.permutationOf( input ).on( 'data', function ( data ) {
+  // display one permutation
+  actualCount++;
+  console.log( data );
+  if ( actualCount >= 4 ) {
+    pengine.interrupt();
+  }  else if ( checkError( data ) ) {
+    pengine.interrupt( new Error( 'Error found' ) );
+  }
+
+} ).on( 'end', function () {
+  // end of permutation
+  console.log( 'end' );
+} ).on( 'error', function ( err ) {
+  // Error object.
+  // Error types: invalid input or all permutation not found (which should never happen)
+} );
+```
