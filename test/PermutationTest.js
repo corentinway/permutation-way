@@ -190,7 +190,7 @@ describe( 'Permutation', function () {
     // call and assertions
     var p = new Permutation( input ).on( 'data', function ( data ) {
       actualPermutationCount++;
-      if ( actualPermutationCount == 2 ) {
+      if ( actualPermutationCount === 2 ) {
 				p.interrupt();
 			}
     } ).on( 'end', function () {
@@ -209,7 +209,7 @@ describe( 'Permutation', function () {
     // call and assertions
     var p = new Permutation( input ).on( 'data', function ( data ) {
       actualPermutationCount++;
-      if ( actualPermutationCount == 2 ) {
+      if ( actualPermutationCount === 2 ) {
 				p.interrupt( 'error interrupted' );
 			}
     } ).on( 'end', function () {
