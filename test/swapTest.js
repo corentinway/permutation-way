@@ -15,15 +15,20 @@ function assertArray( array, expectedLength ) {
 describe( 'swap left', function () {
 	
 	it( 'should raise an exception if the index is out of the array', function () {
+		var testFailing = false;
 		try {
 			// input
 			var input = [ 1, 2 ];
 
 			// call
 			swap.left( input, 3 );
-			assert.fail( 'Exception expected to be raised' );
+			testFailing = true;
 		} catch ( e ) {
 			assert.isDefined( e );
+			assert.equal(e.message, 'You cannot swap with an index of of the array bound');
+		}
+		if(testFailing) {
+			assert.fail();
 		}
 	} );
 	
