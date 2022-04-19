@@ -5,7 +5,7 @@
 
 // TODO coverage
 
-var Permutation = require('../dist/Permutation');
+var {Permutation} = require('../dist/Permutation');
 var assert = require('chai').assert;
 
 function assertArray(array, expectedLength) {

@@ -29,7 +29,7 @@ export class DirectionalEntity {
         return this.code.toString() + ' [' + this.dir + ']';
     }
 
-    static indexOfDirectionalEntity( list : [DirectionalEntity], entity : DirectionalEntity ) {
+    static indexOfDirectionalEntity( list : DirectionalEntity[], entity : DirectionalEntity ) {
 		var i;
         for ( i = 0; i < list.length; i++ ) {
             if ( entity.code === list[i].code ) {
