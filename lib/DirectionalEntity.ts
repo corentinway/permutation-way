@@ -10,23 +10,26 @@
  * @param code {any} data to permute
  * @param dir direction of the entity (default -1)
  */
-function DirectionalEntity( code, dir ) {
-    this.code = code;
-    this.dir = dir || -1;
-}
+export class DirectionalEntity {
+    code : number;
+    dir: number;
 
-/**
- * reverse the direction of the entity
- */
-DirectionalEntity.prototype.reverseDir = function () {
-    this.dir = this.dir * (-1);
-};
+    constructor(code : number, dir?: number) {
+        this.code = code;
+        this.dir = dir || -1;
+    }
 
-DirectionalEntity.prototype.toString = function () {
-	return this.code.toString() + ' [' + this.dir + ']';
-};
+    /**
+     * reverse the direction of the entity
+     */
+    reverseDir() {
+        this.dir = this.dir * (-1);
+    }
+    toString() {
+        return this.code.toString() + ' [' + this.dir + ']';
+    }
 
-DirectionalEntity.indexOfDirectionalEntity = function ( list, entity ) {
+    static indexOfDirectionalEntity( list : [DirectionalEntity], entity : DirectionalEntity ) {
 		var i;
         for ( i = 0; i < list.length; i++ ) {
             if ( entity.code === list[i].code ) {
@@ -34,6 +37,5 @@ DirectionalEntity.indexOfDirectionalEntity = function ( list, entity ) {
             }
         }
         return -1;
-    };
-
-module.exports = DirectionalEntity;
+    }
+}

@@ -8,7 +8,7 @@
  * @param list {Array}
  * @param index index of the element to swap where index + 1 < list.length
  */
-exports.right = function ( list, index ) {
+export function right ( list : [], index : number ) {
     var tmp = list[ index ];
     list[index ] = list[ index + 1 ];
     list[index + 1 ] = tmp;
@@ -18,7 +18,7 @@ exports.right = function ( list, index ) {
  * @param list {Array}
  * @param index index of the element to swap where index + 1 > 0
  */
-exports.left = function ( list, index ) {
+export function left ( list : [], index : number ) {
     if (index < 0 || index >= list.length) {
         throw new Error("You cannot swap with an index of of the array bound");
     }
