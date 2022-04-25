@@ -8,7 +8,7 @@ import util from 'util';
 import { DirectionalEntity } from './DirectionalEntity';
 
 import {left, right} from './swap';
- 
+
 
 /**
  * extract data from direction entities to return one permutation array
@@ -113,12 +113,13 @@ export class Permutation extends EventEmitter {
 	isMaxPermutationReached : MaxPermutationReachedTester;
 	getMaxMobileDirectionalEntity : () => MobileDirectionalEntity | null;
 	entities : DirectionalEntity[];
+	comparator : (a : any, b : any) => 0 | 1 | -1;
 
-	constructor(data : [], comparator? : ((a: any, b: any) => number) | undefined , opt? : Option) {
+	constructor(data : [], comparator? : (a: any, b: any) => 0 | 1 | -1, opt? : Option) {
 		super();
 		this.initialData = data;
-		var comparator = comparator;
-		// comparator not defined
+
+		// TODO if data type is object, then comparator is mandatory
 		// options is the 2nd argument
 		if (!opt && typeof comparator === 'object') {
 			opt = comparator;
@@ -153,15 +154,16 @@ export class Permutation extends EventEmitter {
 		}
 
 		// data comparator
-		var finalComparator : (a:any, b:any) => number;
+		var finalComparator : (a:any, b:any) => 0 | 1 | -1;
 		if (comparator === undefined ) {
 			finalComparator = defaultComparator;
 		} else {
 			finalComparator = comparator;
 		}
+		this.comparator = finalComparator;
 		//comparator = comparator || defaultComparator;
 		// sort array ascending
-		data.sort(comparator);
+		data.sort(finalComparator);
 		// the function that compare DictionnalEntities
 		var entitiesComparator = function (a : DirectionalEntity, b : DirectionalEntity) {
 			return finalComparator(a.code, b.code);
@@ -194,14 +196,16 @@ export class Permutation extends EventEmitter {
 				var max = sortedList[i];
 				// now check for the position of the maxDirNum in original list
 				// to see if the maxDirNum is actually a mobile directional number
-				var positionInOriginalList = DirectionalEntity.indexOfDirectionalEntity(this.entities, max);
+				var positionInOriginalList = DirectionalEntity.indexOfDirectionalEntity(this.entities, max, finalComparator);
 
 				if ( max.dir === -1 &&
 					(
-						positionInOriginalList !== 0 && this.entities[positionInOriginalList - 1].code < max.code
+						//positionInOriginalList !== 0 && this.entities[positionInOriginalList - 1].code < max.code
+						positionInOriginalList !== 0 && finalComparator(this.entities[positionInOriginalList - 1].code, max.code) === -1
 					) ||
 					(
-						max.dir === 1 && positionInOriginalList !== this.entities.length - 1 && this.entities[positionInOriginalList + 1].code < max.code
+						//max.dir === 1 && positionInOriginalList !== this.entities.length - 1 && this.entities[positionInOriginalList + 1].code < max.code
+						max.dir === 1 && positionInOriginalList !== this.entities.length - 1 && finalComparator(this.entities[positionInOriginalList + 1].code, max.code) === -1
 					)
 
 				) {
@@ -302,7 +306,7 @@ export class Permutation extends EventEmitter {
 			// Now reverse the direction of all the numbers greater than mobileDirectionalNumber
 			var i;
 			for (i = 0; i < this.entities.length; i++) {
-				if (mobileDirectionalEntity.code < this.entities[i].code) {
+				if (this.comparator(mobileDirectionalEntity.code, this.entities[i].code) === -1) {
 					this.entities[i].reverseDir();
 				}
 			}

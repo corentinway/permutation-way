@@ -15,7 +15,7 @@ export function factorial(n : number) : number {
 /**
  * a default comparator for 2 elements
  */
- export var defaultComparator = function (a : number , b : number) {
+ export function defaultComparator (a : number , b : number) : 0 | 1 | -1 {
 	if (a > b) {
 		return 1;
 	} else if (a < b) {

@@ -25,14 +25,13 @@ export class DirectionalEntity {
     reverseDir() {
         this.dir = this.dir * (-1);
     }
-    toString() {
+    toString() : string {
         return this.code.toString() + ' [' + this.dir + ']';
     }
 
-    static indexOfDirectionalEntity( list : DirectionalEntity[], entity : DirectionalEntity ) {
-		var i;
-        for ( i = 0; i < list.length; i++ ) {
-            if ( entity.code === list[i].code ) {
+    static indexOfDirectionalEntity<N extends number>( list : DirectionalEntity[], entity : DirectionalEntity, comparator : (a: any, b: any) => 0 | 1 | -1 ) : number {
+        for (var i = 0; i < list.length; i++ ) {
+            if ( comparator(entity.code, list[i].code) === 0 ) {
                 return i;
             }
         }
