@@ -10,7 +10,7 @@ import { DirectionalEntity } from './DirectionalEntity';
  * @param list {Array}
  * @param index index of the element to swap where index + 1 < list.length
  */
-export function right ( list : DirectionalEntity[], index : number ) {
+export function right<T>( list : DirectionalEntity<T>[], index : number ) {
     var tmp = list[ index ];
     list[index ] = list[ index + 1 ];
     list[index + 1 ] = tmp;
@@ -20,7 +20,7 @@ export function right ( list : DirectionalEntity[], index : number ) {
  * @param list {Array}
  * @param index index of the element to swap where index + 1 > 0
  */
-export function left ( list : DirectionalEntity[], index : number ) {
+export function left<T>( list : DirectionalEntity<T>[], index : number ) {
     if (index < 0 || index >= list.length) {
         throw new Error("You cannot swap with an index of of the array bound");
     }

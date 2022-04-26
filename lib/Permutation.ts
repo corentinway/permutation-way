@@ -13,7 +13,7 @@ import {left, right} from './swap';
 /**
  * extract data from direction entities to return one permutation array
  */
-function extractDataFromEntities(entities : DirectionalEntity[]) {
+function extractDataFromEntities<T>(entities : DirectionalEntity<T>[]) : T[] {
 	return entities.map(function (entity) {
 		return entity.code;
 	});
@@ -85,8 +85,8 @@ type Option = {
 	max?: number
 };
 
-type MobileDirectionalEntity = {
-	mobile: DirectionalEntity,
+type MobileDirectionalEntity<T> = {
+	mobile: DirectionalEntity<T>,
 	position: number
 };
 
@@ -103,19 +103,19 @@ type MaxPermutationReachedTester = (actual : number) => boolean;
  * second parameter of the function.
  - or 0 if both value are equals
  */
-export class Permutation extends EventEmitter {
+export class Permutation<T> extends EventEmitter {
 
-	initialData : [];
+	initialData : T[];
 	actualPermutationFound : number = 0;
 	interrupted : boolean = false;
 	options : Option = {};
 	expectedPermutationTester : ExpectedPermutationTester;
 	isMaxPermutationReached : MaxPermutationReachedTester;
-	getMaxMobileDirectionalEntity : () => MobileDirectionalEntity | null;
-	entities : DirectionalEntity[];
+	getMaxMobileDirectionalEntity : () => MobileDirectionalEntity<T> | null;
+	entities : DirectionalEntity<T>[];
 	comparator : (a : any, b : any) => 0 | 1 | -1;
 
-	constructor(data : [], comparator? : (a: any, b: any) => 0 | 1 | -1, opt? : Option) {
+	constructor(data : T[], comparator? : (a: T, b: T) => 0 | 1 | -1, opt? : Option) {
 		super();
 		this.initialData = data;
 
@@ -165,19 +165,19 @@ export class Permutation extends EventEmitter {
 		// sort array ascending
 		data.sort(finalComparator);
 		// the function that compare DictionnalEntities
-		var entitiesComparator = function (a : DirectionalEntity, b : DirectionalEntity) {
-			return finalComparator(a.code, b.code);
-		};
+		// var entitiesComparator = function (a : DirectionalEntity, b : DirectionalEntity) {
+		// 	return finalComparator(a.code, b.code);
+		// };
 		// directional entities array
 		
 		// sorted array ( reverse )
-		var sortedList : DirectionalEntity[];
+		var sortedList : DirectionalEntity<T>[];
 
 		this.entities = data.map(function (item) {
 			return new DirectionalEntity(item);
 		});
 
-		var cloneArray = function (array : DirectionalEntity[]) {
+		var cloneArray = function (array : DirectionalEntity<T>[]) {
 			return array.map(function (i) {
 				return i;
 			});
