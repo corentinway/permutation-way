@@ -3,3 +3,5 @@ samples/
 .github/
 test/
 .travis.yml
+.vscode
+tsconfig.json

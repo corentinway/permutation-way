@@ -1,8 +1,8 @@
 {
   "name": "permutation-way",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "permutation using Steinhaus-Johnson-Trotter algorithm with Even's speed up. This package deliver asynchronously permutations of the original array",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
     "test": "test",
