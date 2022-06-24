@@ -4,7 +4,6 @@
 
 import {factorial, defaultComparator} from './utils';
 import {EventEmitter} from 'events';
-import util from 'util';
 import { DirectionalEntity } from './DirectionalEntity';
 
 import {left, right} from './swap';
@@ -81,7 +80,7 @@ function emitSmallPermutation(data : any[], expectedPermutationTester : Expected
 }
 
 
-type Option = {
+export type Option = {
 	max?: number
 };
 
