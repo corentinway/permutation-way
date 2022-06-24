@@ -1,2 +1,5 @@
-lib
-samples
+lib/
+samples/
+.github/
+test/
+.travis.yml
