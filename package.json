@@ -10,6 +10,7 @@
     "doc": "doc"
   },
   "scripts": {
+    "prepublish": "npm run build",
     "build": "tsc",
     "test": "mocha"
   },
