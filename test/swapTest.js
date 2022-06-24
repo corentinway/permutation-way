@@ -4,7 +4,7 @@
 
 // TODO coverage
 
-var swap = require( '../lib/swap' );
+var swap = require( '../dist/swap' );
 var assert = require( 'chai' ).assert;
 
 function assertArray( array, expectedLength ) {
