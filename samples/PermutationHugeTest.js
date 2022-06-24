@@ -1,4 +1,4 @@
-var Permutation = require( '../lib/Permutation' );
+var {Permutation} = require( '../dist/Permutation' );
 
 
 /**
