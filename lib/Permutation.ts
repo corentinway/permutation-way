@@ -2,83 +2,11 @@
 
 'use strict';
 
-import {factorial, defaultComparator} from './utils';
+import {factorial, defaultComparator, emitSmallPermutation, ExpectedPermutationTester, checkExpected} from './utils';
 import {EventEmitter} from 'events';
-import { DirectionalEntity } from './DirectionalEntity';
+import { DirectionalEntity, extractDataFromEntities } from './DirectionalEntity';
 
 import {left, right} from './swap';
-
-
-/**
- * extract data from direction entities to return one permutation array
- */
-function extractDataFromEntities<T>(entities : DirectionalEntity<T>[]) : T[] {
-	return entities.map(function (entity) {
-		return entity.code;
-	});
-}
-
-/**
- * check the expected amount of permutation and emit 'end' event if the amount is reached,
- * otherwose emit 'error' signal with the Error object.
- * @param actual {Number} number of permutation found
- * @param expected {Number} number of permutation expected
- * @param emitter {EventEmitter}
- */
-function checkExpected(actual : number, expectedTester : ExpectedPermutationTester, emitter : EventEmitter) {
-	if ( expectedTester( actual ) ) {
-		emitter.emit('end');
-	} else {
-		// FIXME var err = new Error('The expected amount of permutation was not reached. Expected: ' + expected);
-		var err = new Error('The expected amount of permutation was not reached. Expected: FIXME ');
-		emitter.emit('error', err);
-	}
-}
-
-function emitSmallPermutation(data : any[], expectedPermutationTester : ExpectedPermutationTester, emitter : EventEmitter) {
-
-	if (!data) {
-		process.nextTick(function () {
-			emitter.emit('error', new Error('The input array is undefined or null'));
-		});
-		return true;
-	}
-
-	if (!Array.isArray(data)) {
-		process.nextTick(function () {
-			emitter.emit('error', new Error('The input data is not an Array'));
-		});
-		return true;
-	}
-
-
-	/*
-	 *   -- SHORTCHUT --
-	 * if the data array is empty or has 1 element,
-	 * there is only one permutation: itself
-	 */
-	if (data.length <= 1) {
-		process.nextTick(function () {
-			emitter.emit('data', data);
-			checkExpected(1, expectedPermutationTester, emitter);
-		});
-		return true;
-	}
-	/*
-	 *   -- SHORTCHUT --
-	 * if the data array is empty or has 2 element,
-	 * there is only one permutation: itself and its reverse
-	 */
-	if (data.length === 2) {
-		process.nextTick(function () {
-			emitter.emit('data', data);
-			emitter.emit('data', data.reverse());
-			checkExpected(2, expectedPermutationTester, emitter);
-		});
-		return true;
-	}
-}
-
 
 export type Option = {
 	max?: number
@@ -89,7 +17,7 @@ type MobileDirectionalEntity<T> = {
 	position: number
 };
 
-type ExpectedPermutationTester = (actual : number) => boolean;
+
 type MaxPermutationReachedTester = (actual : number) => boolean;
 
 /**

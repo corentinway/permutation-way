@@ -42,3 +42,12 @@ export class DirectionalEntity<T extends ToString> {
         return -1;
     }
 }
+
+/**
+ * extract data from direction entities to return one permutation array
+ */
+export function extractDataFromEntities<T>(entities : DirectionalEntity<T>[]) : T[] {
+	return entities.map(function (entity) {
+		return entity.code;
+	});
+}
